@@ -12,7 +12,7 @@ def search_github_projects(query):
 
 
 def update_projects_md(projects, existing_content):
-    new_content = existing_content + '\n\n'
+    new_content = existing_content + '\n'
     for project in projects:
         name = project['name']
         html_url = project['html_url']
@@ -21,7 +21,7 @@ def update_projects_md(projects, existing_content):
 
 
 def main():
-    query = 'language:Python+stars:>1000+topic:中文'
+    query = 'language:Python stars:>1000 topic:中文'
     results = search_github_projects(query)
     projects = results['items']
 
