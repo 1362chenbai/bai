@@ -35,6 +35,12 @@ def main():
     # Update projects.md with new projects
     updated_content = update_projects_md(projects, existing_content)
 
+    # Get the SHA of the latest commit
+    url = 'https://api.github.com/repos/1362chenbai/bai/git/refs/heads/main'
+    response = requests.get(url)
+    response.raise_for_status()
+    sha = response.json()['object']['sha']
+
     # Update projects.md on GitHub
     url = 'https://api.github.com/repos/1362chenbai/bai/contents/projects.md'
     headers = {
@@ -43,7 +49,7 @@ def main():
     data = {
         'message': 'Update projects.md with new projects',
         'content': base64.b64encode(updated_content.encode('utf-8')).decode('utf-8'),
-        'sha': response.json()['sha'],
+        'sha': sha,
         'branch': 'main'
     }
     response = requests.put(url, headers=headers, json=data)
